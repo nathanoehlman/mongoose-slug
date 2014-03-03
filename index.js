@@ -17,6 +17,7 @@ var slug = require('slug-component');
  *      - `.replace` characters to replace defaulted to `[^a-zA-Z]`
  *      - `.separator` separator to use, defaulted to `-`
  *      - `required` whether a slug is required, defaults to `true`
+ *      - `update` whether a slug should be updated if it has changed, defaults to `true`
  *
  * @param {String} prop
  * @param {Object} options
@@ -42,7 +43,7 @@ module.exports = function(prop, opts){
 
       var require = (opts && !opts.required) ? false : true;
       if (require && !title) return next(new Error(prop + ' is required to create a slug'));
-      if (title) self.slug = slug(title, opts);
+      if (title && (opts.update || !self.slug)) self.slug = slug(title, opts);
       next();
     });
   });
