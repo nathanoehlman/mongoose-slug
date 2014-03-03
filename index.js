@@ -41,9 +41,10 @@ module.exports = function(prop, opts){
         title = this[prop || 'title'];
       }
 
-      var require = (opts && !opts.required) ? false : true;
+      var require = (opts && !opts.required) ? false : true,
+          update = (opts && !opts.update) ? false : true;
       if (require && !title) return next(new Error(prop + ' is required to create a slug'));
-      if (title && (opts.update || !self.slug)) self.slug = slug(title, opts);
+      if (title && (update || !self.slug)) self.slug = slug(title, opts);
       next();
     });
   });
